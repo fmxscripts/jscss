@@ -64,8 +64,7 @@ const JSTableDefaultConfig = {
     searchDelay: null, // ms
     rowAttributesCreator: null,
     method: "POST",
-    columnKeys: null,   // <— unificación de nombre
-    // columnsKeys (legacy) seguirá siendo leído si lo pasas
+    colKeys: null,   // <— unificación de nombre
 };
 
 class JSTable {
@@ -78,8 +77,8 @@ class JSTable {
 
         this.config = this._merge(JSTableDefaultConfig, config);
         // compat legacy
-        if (!this.config.columnKeys && this.config.columnsKeys) {
-            this.config.columnKeys = this.config.columnsKeys;
+        if (!this.config.colKeys && this.config.colKeys) {
+            this.config.colKeys = this.config.colKeys;
         }
 
         this.table = new JSTableElement(DOMElement);
@@ -393,7 +392,7 @@ class JSTable {
 
                 const rows = [];
                 (json.data || []).forEach(dataRow => {
-                    rows.push(JSTableRow.createFromData(dataRow, this.config.columnKeys));
+                    rows.push(JSTableRow.createFromData(dataRow, this.config.colKeys));
                 });
                 return rows;
             })
@@ -735,7 +734,7 @@ class JSTableRow {
     getCell(cell) { return this.cells[cell]; }
     getCellTextContent(cell) { return this.getCell(cell).getTextContent(); }
 
-    static createFromData(data, columnKeys) {
+    static createFromData(data, colKeys) {
         const tr = document.createElement("tr");
 
         // Permite formato { attributes, data }
@@ -767,8 +766,8 @@ class JSTableRow {
             tr.appendChild(td);
         };
 
-        if (Array.isArray(columnKeys) && columnKeys.length) {
-            for (const key of columnKeys) appendCell(data?.[key]);
+        if (Array.isArray(colKeys) && colKeys.length) {
+            for (const key of colKeys) appendCell(data?.[key]);
         } else if (data && typeof data === "object") {
             for (const key of Object.keys(data)) appendCell(data[key]);
         }
