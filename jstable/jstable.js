@@ -64,7 +64,7 @@ const JSTableDefaultConfig = {
     searchDelay: null, // ms
     rowAttributesCreator: null,
     method: "POST",
-    colKeys: null,   // <— unificación de nombre
+    colKeys: null
 };
 
 class JSTable {
