@@ -152,7 +152,7 @@ class JSTable {
         container.appendChild(this.table.element);
 
         // Top area (perPage + info)
-        this._renderTop();
+        //this._renderTop();
 
         // info placeholder si no existía
         let info = this.wrapper.querySelector("." + options.classes.info);
