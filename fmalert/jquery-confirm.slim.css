@@ -1,0 +1,128 @@
+/*! jquery-confirm SLIM theme — modern + variables, no animated borders. MIT. */
+:root{
+  --jc-bg: #ffffff;
+  --jc-fg: #111827;
+  --jc-shadow: 0 12px 32px rgba(0,0,0,.18);
+  --jc-radius: 12px;
+  --jc-pad-x: 22px;
+  --jc-pad-y: 16px;
+  --jc-z: 99999999;
+
+  /* accent colors */
+  --jc-blue:#3498db;
+  --jc-green:#2ecc71;
+  --jc-red:#e74c3c;
+  --jc-orange:#f1c40f;
+  --jc-purple:#9b59b6;
+  --jc-dark:#34495e;
+
+  --jc-btn-bg:#e5e7eb;
+  --jc-btn-fg:#111827;
+  --jc-focus: 0 0 0 3px rgba(96,165,250,.25);
+}
+
+/* Dark mode auto */
+@media (prefers-color-scheme: dark){
+  :root{
+    --jc-bg:#0b1220;
+    --jc-fg:#e5e7eb;
+    --jc-shadow: 0 16px 40px rgba(0,0,0,.48);
+    --jc-btn-bg:#1f2937;
+    --jc-btn-fg:#e5e7eb;
+  }
+}
+
+/* overlay + layout */
+body[class*=jconfirm-no-scroll-]{ overflow:hidden !important; }
+.jconfirm{
+  position:fixed; inset:0; z-index:var(--jc-z); font-family:inherit;
+  display:table; width:100%; height:100%;
+  perspective:400px;
+}
+.jconfirm .jconfirm-bg{
+  position:fixed; inset:0; background: rgba(54, 70, 93, .65);
+  transition: opacity .25s ease;
+}
+.jconfirm .jconfirm-scrollpane{ display:table; width:100%; height:100%; }
+.jconfirm .jconfirm-row{ display:table-row; width:100%; }
+.jconfirm .jconfirm-cell{ display:table-cell; vertical-align:middle; }
+.jconfirm .jconfirm-holder{ max-height:100%; padding:48px 0; }
+.jconfirm .jconfirm-box-container{ transition: transform .2s ease; }
+
+/* box */
+.jconfirm .jconfirm-box{
+  background:var(--jc-bg); color:var(--jc-fg);
+  border-radius:var(--jc-radius);
+  box-shadow:var(--jc-shadow);
+  padding: var(--jc-pad-y) var(--jc-pad-x) 12px;
+  margin-inline:auto; outline:none; overflow:hidden;
+  opacity:0; transform: translateY(8px) scale(.98);
+  transition: opacity .2s ease, transform .2s ease;
+  border-top:6px solid transparent;
+}
+.jconfirm.jconfirm-open .jconfirm-box{ opacity:1; transform: translateY(0) scale(1); }
+
+/* title */
+.jconfirm .jconfirm-title-c{
+  display:block; font-size:20px; font-weight:600; letter-spacing:.2px;
+  padding-bottom:12px; user-select:none; cursor:default; text-align:center;
+}
+.jconfirm .jconfirm-title-c .jconfirm-icon-c{ margin-right:8px; }
+.jconfirm .jconfirm-title-c:empty{ display:none; }
+
+/* content */
+.jconfirm .jconfirm-content-pane{
+  position:relative; width:100%; display:inline-block;
+  max-height:50vh; overflow:auto; margin-bottom:14px;
+}
+.jconfirm .jconfirm-content-pane.no-scroll{ overflow:hidden; }
+.jconfirm .jconfirm-content-pane::-webkit-scrollbar{ width:6px; }
+.jconfirm .jconfirm-content-pane::-webkit-scrollbar-thumb{ background:#666; border-radius:3px; }
+.jconfirm .jconfirm-content img{ max-width:100%; height:auto; }
+.jconfirm .jconfirm-content:empty{ display:none; }
+
+/* close icon (optional, hidden by default) */
+.jconfirm .jconfirm-closeIcon{
+  position:absolute; top:10px; right:12px; width:22px; height:22px;
+  text-align:center; line-height:18px; font-size:22px; opacity:.7; cursor:pointer; display:none;
+}
+.jconfirm .jconfirm-closeIcon:hover{ opacity:1; }
+
+/* buttons */
+.jconfirm .jconfirm-buttons{ text-align:center; padding-bottom:10px; }
+.jconfirm .jconfirm-buttons > button{ margin:0 4px 6px; }
+.jconfirm .jconfirm-buttons button{
+  display:inline-block; border:0; background-image:none; cursor:pointer;
+  padding:9px 14px; border-radius:10px;
+  font-size:14px; font-weight:600; user-select:none; white-space:nowrap;
+  transition:filter .12s ease, transform .06s ease;
+}
+.jconfirm .jconfirm-buttons button:active{ transform: translateY(1px); }
+.jconfirm .jconfirm-buttons .btn-default{ background:var(--jc-btn-bg); color:var(--jc-btn-fg); }
+.jconfirm .jconfirm-buttons .btn-blue{   background:var(--jc-blue);   color:#fff; }
+.jconfirm .jconfirm-buttons .btn-green{  background:var(--jc-green);  color:#fff; }
+.jconfirm .jconfirm-buttons .btn-red{    background:var(--jc-red);    color:#fff; }
+.jconfirm .jconfirm-buttons .btn-orange{ background:var(--jc-orange); color:#111; }
+.jconfirm .jconfirm-buttons .btn-purple{ background:var(--jc-purple); color:#fff; }
+.jconfirm .jconfirm-buttons .btn-dark{   background:var(--jc-dark);   color:#fff; }
+.jconfirm .jconfirm-buttons button:hover{ filter:brightness(.93); }
+
+/* type → top border color */
+.jconfirm .jconfirm-box.jconfirm-type-blue{   border-top-color: var(--jc-blue); }
+.jconfirm .jconfirm-box.jconfirm-type-green{  border-top-color: var(--jc-green); }
+.jconfirm .jconfirm-box.jconfirm-type-red{    border-top-color: var(--jc-red); }
+.jconfirm .jconfirm-box.jconfirm-type-orange{ border-top-color: var(--jc-orange); }
+.jconfirm .jconfirm-box.jconfirm-type-purple{ border-top-color: var(--jc-purple); }
+.jconfirm .jconfirm-box.jconfirm-type-dark{   border-top-color: var(--jc-dark); }
+
+/* simple input field for prompts */
+.jc-field{ display:flex; flex-direction:column; gap:6px; margin-top:8px; text-align:left; }
+.jc-field .jc-input{
+  border:1px solid #d1d5db; border-radius:10px; padding:8px 10px; outline:none;
+  background:inherit; color:inherit;
+}
+.jc-field .jc-input:focus{ border-color:#60a5fa; box-shadow:var(--jc-focus); }
+
+/* RTL support */
+.jconfirm.jconfirm-rtl .jconfirm-title-c .jconfirm-icon-c{ margin-left:8px; margin-right:0; }
+.jconfirm.jconfirm-rtl .jconfirm-closeIcon{ left:12px; right:auto; }

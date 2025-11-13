@@ -3,7 +3,7 @@ const JSTableDefaultConfig = {
     perPageSelect: [5, 10, 15, 20, 25],
 
     sortable: true,
-    searchable: false,
+    // searchable: false, // Eliminado
     pagination: true,
 
     // Pagination
@@ -23,7 +23,7 @@ const JSTableDefaultConfig = {
         input: "dt-input",
         table: "dt-table",
         bottom: "dt-bottom",
-        search: "dt-search",
+        // search: "dt-search", // Eliminado
         sorter: "dt-sorter",
         wrapper: "dt-wrapper",
         dropdown: "dt-dropdown",
@@ -31,18 +31,18 @@ const JSTableDefaultConfig = {
         selector: "dt-selector",
         container: "dt-container",
         pagination: "dt-pagination",
-        loading: "dt-loading",
+        // loading: "dt-loading", // Eliminado
         message: "dt-message"
     },
 
     // Display text
     labels: {
-        placeholder: "Search...",
+        // placeholder: "Search...", // Eliminado
         perPage: "{select} entries per page",
         noRows: "...",
         info: "Showing {start} to {end} of {rows} entries",
-        loading: "Loading...",
-        infoFiltered: "Showing {start} to {end} of {rows} entries (filtered from {rowsTotal} entries)",
+        // loading: "Loading...", // Eliminado
+        // infoFiltered: "Showing {start} to {end} of {rows} entries (filtered from {rowsTotal} entries)", // Eliminado
         error: "Error loading data"
     },
 
@@ -57,11 +57,11 @@ const JSTableDefaultConfig = {
     ajaxParams: {},
     queryParams: {
         page: "page",
-        search: "search"
+        // search: "search" // Eliminado
     },
 
     addQueryParams: true,
-    searchDelay: null, // ms
+    // searchDelay: null, // ms // Eliminado
     rowAttributesCreator: null,
     method: "POST",
     colKeys: null
@@ -86,11 +86,11 @@ class JSTable {
         // estado
         this.currentPage = 1;
         this.columnRenderers = [];
-        this.columnsNotSearchable = [];
-        this.searchQuery = null;
+        // this.columnsNotSearchable = []; // Eliminado
+        // this.searchQuery = null; // Eliminado
         this.sortColumn = null;
         this.sortDirection = "asc";
-        this.isSearching = false;
+        // this.isSearching = false; // Eliminado
         this.filteredDataCount = null;
         this.totalDataCount = 0;
         this.response = null;
@@ -135,7 +135,7 @@ class JSTable {
         let inner = [
             `<div class="${options.classes.top}"></div>`,
             `<div class="${options.classes.container}">`,
-            `<div class="${options.classes.loading} hidden">${options.labels.loading}</div>`,
+            // `<div class="${options.classes.loading} hidden">${options.labels.loading}</div>`, // Eliminado
             `</div>`,
             `<div class="${options.classes.bottom}" ${!options.pagination ? "style='display:none'" : ""}>${options.layout.bottom}</div>`
         ].join("");
@@ -222,7 +222,8 @@ class JSTable {
 
     _updateInfo() {
         const info = this.wrapper.querySelector("." + this.config.classes.info);
-        const infoString = this.isSearching ? this.config.labels.infoFiltered : this.config.labels.info;
+        // const infoString = this.isSearching ? this.config.labels.infoFiltered : this.config.labels.info; // Modificado
+        const infoString = this.config.labels.info; // Simplificado
         if (info && infoString?.length) {
             const string = infoString
                 .replace("{start}", this.getDataCount() > 0 ? this._getPageStartIndex() + 1 : 0)
@@ -252,8 +253,9 @@ class JSTable {
     // ====== DATA (server/client) ======
 
     _setLoading(show) {
-        const n = this.wrapper.querySelector("." + this.config.classes.loading);
-        if (n) n.classList.toggle("hidden", !show);
+        // const n = this.wrapper.querySelector("." + this.config.classes.loading); // Eliminado
+        // if (n) n.classList.toggle("hidden", !show); // Eliminado
+        // Método vaciado para no hacer nada
     }
 
     _fetchData() {
@@ -273,7 +275,7 @@ class JSTable {
         };
 
         this._emit("before", this);
-        this._setLoading(true);
+        this._setLoading(true); // Llamará al método vacío
 
         let url = ajax;
         const fetchInit = {
@@ -286,7 +288,7 @@ class JSTable {
             const usp = new URLSearchParams(params);
             if (addQueryParams) {
                 if (this.currentPage != null && queryParams.page) usp.set(queryParams.page, String(this.currentPage));
-                if (this.searchQuery && queryParams.search) usp.set(queryParams.search, this.searchQuery);
+                // if (this.searchQuery && queryParams.search) usp.set(queryParams.search, this.searchQuery); // Eliminado
             }
             url += (url.includes("?") ? "&" : "?") + usp.toString();
         } else {
@@ -319,7 +321,7 @@ class JSTable {
                 this.setMessage(this.config.labels?.error ?? "Error");
                 return [];
             })
-            .finally(() => this._setLoading(false));
+            .finally(() => this._setLoading(false)); // Llamará al método vacío
     }
 
     getResponse() {
@@ -327,7 +329,7 @@ class JSTable {
     }
 
     getDataCount() {
-        if (this.isSearching) return this.getDataCountFiltered();
+        // if (this.isSearching) return this.getDataCountFiltered(); // Eliminado
         return this.getDataCountTotal();
     }
 
@@ -526,13 +528,15 @@ class JSTable {
                         }
                     }
 
-                    // searchable (client-side)
+                    /*
+                    // searchable (client-side) // BLOQUE ELIMINADO
                     if (columnsDefinition.hasOwnProperty("searchable")) {
                         tableHeaderCell.addAttribute("data-searchable", columnsDefinition.searchable);
                         if (columnsDefinition.searchable === false) {
                             this.columnsNotSearchable.push(column);
                         }
                     }
+                    */
                 });
             });
         }
@@ -599,6 +603,9 @@ class JSTable {
         this.events = {};
     }
 }
+
+// ... (El resto de las clases JSTableElement, JSTableRow, JSTableCell, JSTablePager permanecen iguales)
+// ... (Dejándolas aquí para que el script esté completo)
 
 class JSTableElement {
     constructor(element) {
