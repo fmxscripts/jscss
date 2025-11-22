@@ -1,0 +1,90 @@
+/* --- 1. CONTENEDOR DE TOASTS (Lógica de Apilamiento) --- */
+.toast-container {
+    z-index: 9999;
+    position: fixed;
+    padding: 10px;
+}
+
+/* Reducir espacio entre toasts para que se vean compactos */
+.toast-container > :not(:last-child) {
+    margin-bottom: 10px !important;
+}
+
+/* --- 2. ESTILO VISUAL SWEETALERT2 --- */
+/* Imitamos la caja blanca con sombra suave de SWAL2 */
+.swal-toast-clone {
+    background-color: #fff !important; /* Fondo blanco puro */
+    color: #545454 !important;         /* Color de texto SWAL */
+    box-shadow: 0 0 20px rgba(0,0,0,0.15) !important; /* Sombra elegante */
+    border: none !important;
+    border-radius: 5px !important;
+    min-width: 350px; /* Un poco más ancho como SWAL */
+    max-width: 100%;
+    font-size: 1rem;
+    overflow: hidden; /* Para la barra de progreso */
+    position: relative;
+    opacity: 0; /* Para animación de entrada */
+    transition: opacity 0.3s ease-in-out;
+}
+
+.swal-toast-clone.show {
+    opacity: 1;
+}
+
+/* Tipografía de título y mensaje */
+.swal-title {
+    font-weight: 600;
+    font-size: 1.1em;
+    margin-right: 10px;
+    color: #1f1f1f;
+}
+
+/* --- 3. ICONOS PERSONALIZADOS (Estilo SWAL sin animación) --- */
+.swal-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Colores exactos de SweetAlert2 */
+.icon-success { color: #a5dc86; }
+.icon-error   { color: #f27474; }
+.icon-warning { color: #f8bb86; }
+.icon-info    { color: #3fc3ee; }
+
+/* --- 4. BARRA DE PROGRESO --- */
+.toast-progress-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 4px;
+    width: 100%;
+    background-color: rgba(0,0,0,0.1);
+    transform-origin: left;
+    animation: progress-linear linear forwards;
+}
+
+/* Colores de la barra según el tipo */
+.progress-success { background-color: #a5dc86; }
+.progress-error   { background-color: #f27474; }
+.progress-warning { background-color: #f8bb86; }
+.progress-info    { background-color: #3fc3ee; }
+
+@keyframes progress-linear {
+    from { width: 100%; }
+    to { width: 0%; }
+}
+
+/* Pausa al pasar el mouse (igual que SWAL) */
+.swal-toast-clone:hover .toast-progress-bar {
+    animation-play-state: paused;
+}
+
+/* Botón de cerrar personalizado */
+.btn-close-custom {
+    filter: grayscale(100%);
+    opacity: 0.3;
+}
