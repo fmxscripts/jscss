@@ -1,29 +1,28 @@
-/* --- 1. CONTENEDOR DE TOASTS (Lógica de Apilamiento) --- */
+/* --- 1. CONTENEDOR DE TOASTS --- */
 .toast-container {
-    z-index: 9999;
+    z-index: 999999 !important;
     position: fixed;
-    padding: 10px;
+    padding: 5px; /* Reducido de 10px */
 }
 
-/* Reducir espacio entre toasts para que se vean compactos */
+/* Reducir espacio entre toasts */
 .toast-container > :not(:last-child) {
-    margin-bottom: 10px !important;
+    margin-bottom: 8px !important; /* Reducido de 10px */
 }
 
-/* --- 2. ESTILO VISUAL SWEETALERT2 --- */
-/* Imitamos la caja blanca con sombra suave de SWAL2 */
+/* --- 2. ESTILO VISUAL SWEETALERT2 COMPACTO --- */
 .swal-toast-clone {
-    background-color: #fff !important; /* Fondo blanco puro */
-    color: #545454 !important;         /* Color de texto SWAL */
-    box-shadow: 0 0 20px rgba(0,0,0,0.15) !important; /* Sombra elegante */
+    background-color: #fff !important;
+    color: #545454 !important;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1) !important;
     border: none !important;
-    border-radius: 5px !important;
-    min-width: 350px; /* Un poco más ancho como SWAL */
-    max-width: 100%;
-    font-size: 1rem;
-    overflow: hidden; /* Para la barra de progreso */
+    border-radius: 4px !important; /* Bordes un poco más sutiles */
+    min-width: 280px; /* Reducido de 350px */
+    max-width: 320px;
+    font-size: 0.9rem; /* Letra un poco más pequeña */
+    overflow: hidden;
     position: relative;
-    opacity: 0; /* Para animación de entrada */
+    opacity: 0;
     transition: opacity 0.3s ease-in-out;
 }
 
@@ -31,25 +30,35 @@
     opacity: 1;
 }
 
-/* Tipografía de título y mensaje */
+/* Título más compacto */
 .swal-title {
     font-weight: 600;
-    font-size: 1.1em;
-    margin-right: 10px;
+    font-size: 1em; /* Reducido de 1.1em */
+    margin-right: 5px;
     color: #1f1f1f;
+    line-height: 1.2;
 }
 
-/* --- 3. ICONOS PERSONALIZADOS (Estilo SWAL sin animación) --- */
+/* Texto secundario más pequeño */
+.swal-text {
+    font-size: 0.85em;
+    margin-top: 2px;
+    display: block;
+    line-height: 1.2;
+}
+
+/* --- 3. ICONOS --- */
 .swal-icon {
-    width: 24px;
-    height: 24px;
-    margin-right: 12px;
+    width: 20px; /* Reducido de 24px */
+    height: 20px; /* Reducido de 24px */
+    margin-right: 8px; /* Reducido de 12px */
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0; /* Evita que se aplaste si hay mucho texto */
 }
 
-/* Colores exactos de SweetAlert2 */
+/* Colores */
 .icon-success { color: #a5dc86; }
 .icon-error   { color: #f27474; }
 .icon-warning { color: #f8bb86; }
@@ -60,14 +69,13 @@
     position: absolute;
     bottom: 0;
     left: 0;
-    height: 4px;
+    height: 3px; /* Un poco más fina */
     width: 100%;
     background-color: rgba(0,0,0,0.1);
     transform-origin: left;
     animation: progress-linear linear forwards;
 }
 
-/* Colores de la barra según el tipo */
 .progress-success { background-color: #a5dc86; }
 .progress-error   { background-color: #f27474; }
 .progress-warning { background-color: #f8bb86; }
@@ -78,13 +86,13 @@
     to { width: 0%; }
 }
 
-/* Pausa al pasar el mouse (igual que SWAL) */
 .swal-toast-clone:hover .toast-progress-bar {
     animation-play-state: paused;
 }
 
-/* Botón de cerrar personalizado */
 .btn-close-custom {
     filter: grayscale(100%);
     opacity: 0.3;
+    padding: 0.25rem !important; /* Botón cerrar más pequeño */
+    font-size: 0.7rem;
 }
